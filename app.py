@@ -1018,10 +1018,11 @@ def show_purchase_orders():
                         received_qty=recv_qty_val,
                         medicine_id=int(recv_item['medicine_id'])
                     )
-                    # Also mark PO as received if all items done
-                    all_received = all(
+                    # Re-fetch items from DB so we check the updated quantities
+                    updated_items = get_purchase_order_items(recv_po_id)
+                    all_received = not updated_items.empty and all(
                         row['received_qty'] >= row['quantity']
-                        for _, row in recv_items.iterrows()
+                        for _, row in updated_items.iterrows()
                     )
                     if all_received:
                         update_purchase_order_status(recv_po_id, 'received',
