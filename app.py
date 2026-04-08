@@ -116,21 +116,21 @@ def inject_css():
     }
 
     /* ══════════════════════════════════════════
-       TOP HEADER
+       TOP HEADER — light
     ══════════════════════════════════════════ */
     header[data-testid="stHeader"] {
-        background: linear-gradient(90deg, var(--brand-900) 0%, var(--brand-800) 100%) !important;
-        border-bottom: 2px solid var(--accent);
-        box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        background: #ffffff !important;
+        border-bottom: 2px solid #e2e8f0;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.08);
     }
 
     /* ══════════════════════════════════════════
-       SIDEBAR — Dark glass panel
+       SIDEBAR — Light panel
     ══════════════════════════════════════════ */
     section[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, var(--brand-900) 0%, #0f2238 60%, #091b31 100%) !important;
-        border-right: 1px solid rgba(6, 182, 212, 0.3);
-        box-shadow: 4px 0 30px rgba(0,0,0,0.4);
+        background: #ffffff !important;
+        border-right: 1px solid #e2e8f0;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.06);
         padding-top: 0 !important;
     }
     section[data-testid="stSidebar"] > div:first-child {
@@ -140,22 +140,22 @@ def inject_css():
     section[data-testid="stSidebar"] label,
     section[data-testid="stSidebar"] span:not([class]),
     section[data-testid="stSidebar"] div:not([class]) {
-        color: #cbd5e1 !important;
+        color: #374151 !important;
     }
     section[data-testid="stSidebar"] h1,
     section[data-testid="stSidebar"] h2,
     section[data-testid="stSidebar"] h3,
     section[data-testid="stSidebar"] strong {
-        color: #ffffff !important;
+        color: #0f172a !important;
     }
     section[data-testid="stSidebar"] hr {
         border: none !important;
-        border-top: 1px solid rgba(6, 182, 212, 0.2) !important;
+        border-top: 1px solid #e2e8f0 !important;
         margin: 0.75rem 0 !important;
     }
     /* Sidebar nav pills */
     section[data-testid="stSidebar"] [data-testid="stRadio"] label {
-        color: #e2e8f0 !important;
+        color: #374151 !important;
         font-size: 0.88rem !important;
         font-weight: 500 !important;
         padding: 0.55rem 0.9rem;
@@ -165,24 +165,25 @@ def inject_css():
         margin: 2px 0;
     }
     section[data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
-        background: rgba(2, 132, 199, 0.18) !important;
-        color: #ffffff !important;
+        background: #eff6ff !important;
+        color: #0369a1 !important;
     }
     /* Active nav item highlight */
     section[data-testid="stSidebar"] [data-testid="stRadio"] [aria-checked="true"] + div label,
     section[data-testid="stSidebar"] [data-testid="stRadio"] input:checked ~ div label {
-        background: linear-gradient(90deg, rgba(2,132,199,0.35), rgba(2,132,199,0.12)) !important;
-        color: #ffffff !important;
-        border-left: 3px solid #38bdf8 !important;
+        background: #dbeafe !important;
+        color: #1d4ed8 !important;
+        border-left: 3px solid #0284c7 !important;
         padding-left: 0.75rem !important;
+        font-weight: 700 !important;
     }
 
     /* ══════════════════════════════════════════
        SIDEBAR BRAND HEADER
     ══════════════════════════════════════════ */
     .sidebar-brand {
-        background: linear-gradient(135deg, rgba(6,182,212,0.15), rgba(16,185,129,0.1));
-        border-bottom: 1px solid rgba(6,182,212,0.25);
+        background: linear-gradient(135deg, #eff6ff, #f0fdf4);
+        border-bottom: 1px solid #e2e8f0;
         padding: 1.25rem 1rem 1rem;
         margin-bottom: 0.5rem;
         text-align: center;
@@ -195,7 +196,7 @@ def inject_css():
     .sidebar-brand-name {
         font-size: 1.1rem !important;
         font-weight: 800 !important;
-        background: linear-gradient(135deg, #38bdf8, #34d399);
+        background: linear-gradient(135deg, #0284c7, #059669);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -206,12 +207,12 @@ def inject_css():
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
-        background: rgba(255,255,255,0.1);
-        border: 1px solid rgba(255,255,255,0.2);
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
         border-radius: 20px;
         padding: 0.3rem 0.75rem;
         font-size: 0.78rem;
-        color: #e2e8f0 !important;
+        color: #374151 !important;
         margin-top: 0.5rem;
     }
 
