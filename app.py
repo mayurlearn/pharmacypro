@@ -8,8 +8,8 @@ import sqlite3
 
 # Page configuration
 st.set_page_config(
-    page_title="Pharmacy Management System",
-    page_icon="💊",
+    page_title="PharmaNova HMS",
+    page_icon="🧬",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -76,25 +76,24 @@ def inject_css():
        CSS VARIABLES — high-contrast light theme
     ══════════════════════════════════════════ */
     :root {
-        --brand-900: #0d1b2a;
-        --brand-800: #1b2e45;
-        --brand-700: #1e3a5f;
-        --brand-500: #3b82f6;
-        --accent:    #0284c7;
-        --accent2:   #059669;
+        --brand-900: #0f172a;
+        --brand-800: #1e293b;
+        --brand-700: #334155;
+        --brand-500: #2563eb;
+        --accent:    #2563eb;
+        --accent2:   #0d9488;
         --accent3:   #7c3aed;
         --surface:   #ffffff;
         --surface2:  #f8fafc;
-        --surface3:  #f1f5f9;
-        --border:    #cbd5e1;
-        /* ── TEXT: all dark, high contrast ── */
-        --text-1:    #0a0f1a;   /* near-black headings */
-        --text-2:    #1e293b;   /* dark body text */
-        --text-3:    #374151;   /* secondary text (was #64748b — too light) */
-        --text-4:    #4b5563;   /* muted text (was #94a3b8 — too light) */
+        --surface3:  #eef2ff;
+        --border:    #dbe3ee;
+        --text-1:    #0b1220;
+        --text-2:    #1f2937;
+        --text-3:    #334155;
+        --text-4:    #475569;
         --danger:    #dc2626;
         --warning:   #d97706;
-        --success:   #059669;
+        --success:   #0d9488;
         --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
         --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1),  0 2px 4px -1px rgba(0,0,0,0.06);
         --shadow-lg: 0 10px 25px -3px rgba(0,0,0,0.12), 0 4px 6px -2px rgba(0,0,0,0.07);
@@ -105,7 +104,7 @@ def inject_css():
        GLOBAL BACKGROUND — clean white
     ══════════════════════════════════════════ */
     .stApp {
-        background: #f4f6f9 !important;
+        background: linear-gradient(160deg, #f8fbff 0%, #f5f9ff 45%, #f2fbfa 100%) !important;
         min-height: 100vh;
     }
 
@@ -119,9 +118,10 @@ def inject_css():
        TOP HEADER — light
     ══════════════════════════════════════════ */
     header[data-testid="stHeader"] {
-        background: #ffffff !important;
-        border-bottom: 2px solid #e2e8f0;
-        box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+        background: rgba(255,255,255,0.9) !important;
+        backdrop-filter: blur(6px);
+        border-bottom: 1px solid #e2e8f0;
+        box-shadow: 0 1px 8px rgba(15,23,42,0.06);
     }
 
     /* ══════════════════════════════════════════
@@ -129,8 +129,8 @@ def inject_css():
     ══════════════════════════════════════════ */
     section[data-testid="stSidebar"] {
         background: #ffffff !important;
-        border-right: 1px solid #e2e8f0;
-        box-shadow: 2px 0 12px rgba(0,0,0,0.06);
+        border-right: 1px solid #dbe3ee;
+        box-shadow: 2px 0 18px rgba(15,23,42,0.06);
         padding-top: 0 !important;
     }
     section[data-testid="stSidebar"] > div:first-child {
@@ -182,21 +182,21 @@ def inject_css():
        SIDEBAR BRAND HEADER
     ══════════════════════════════════════════ */
     .sidebar-brand {
-        background: linear-gradient(135deg, #eff6ff, #f0fdf4);
-        border-bottom: 1px solid #e2e8f0;
+        background: linear-gradient(135deg, #eef4ff, #ecfeff);
+        border-bottom: 1px solid #dbe3ee;
         padding: 1.25rem 1rem 1rem;
         margin-bottom: 0.5rem;
         text-align: center;
     }
     .sidebar-brand-logo {
-        font-size: 2.2rem;
+        font-size: 2rem;
         display: block;
         margin-bottom: 0.3rem;
     }
     .sidebar-brand-name {
         font-size: 1.1rem !important;
         font-weight: 800 !important;
-        background: linear-gradient(135deg, #0284c7, #059669);
+        background: linear-gradient(135deg, #2563eb, #0d9488);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -207,8 +207,8 @@ def inject_css():
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
-        background: #f1f5f9;
-        border: 1px solid #cbd5e1;
+        background: #f8fafc;
+        border: 1px solid #dbe3ee;
         border-radius: 20px;
         padding: 0.3rem 0.75rem;
         font-size: 0.78rem;
@@ -316,14 +316,14 @@ def inject_css():
         letter-spacing: 0.01em !important;
     }
     .stButton > button[kind="primary"] {
-        background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
         color: #ffffff !important;
         border: none !important;
-        box-shadow: 0 4px 14px rgba(2,132,199,0.4) !important;
+        box-shadow: 0 6px 16px rgba(37,99,235,0.35) !important;
     }
     .stButton > button[kind="primary"]:hover {
-        background: linear-gradient(135deg, #0369a1 0%, #075985 100%) !important;
-        box-shadow: 0 6px 20px rgba(2,132,199,0.5) !important;
+        background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+        box-shadow: 0 8px 20px rgba(37,99,235,0.4) !important;
         transform: translateY(-1px) !important;
     }
     .stButton > button[kind="primary"]:active {
@@ -695,19 +695,19 @@ def login_page():
     with col2:
         st.markdown("""
         <div style="text-align:center; margin: 2rem 0 1.5rem;">
-            <div style="width:72px; height:72px; background:linear-gradient(135deg,#06b6d4,#0891b2); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:2rem; margin:0 auto 1rem; box-shadow:0 8px 24px rgba(6,182,212,0.4);">💊</div>
-            <div style="font-size:1.7rem; font-weight:800; color:#0f172a; letter-spacing:-0.025em;">PharmaCare Pro</div>
-            <div style="font-size:0.875rem; color:#64748b; margin-top:0.25rem;">Pharmacy Management System</div>
+            <div style="width:72px; height:72px; background:linear-gradient(135deg,#2563eb,#0d9488); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:2rem; margin:0 auto 1rem; box-shadow:0 8px 24px rgba(37,99,235,0.35);">🧬</div>
+            <div style="font-size:1.7rem; font-weight:800; color:#0f172a; letter-spacing:-0.025em;">PharmaNova</div>
+            <div style="font-size:0.875rem; color:#475569; margin-top:0.25rem;">Smart Pharmacy Management Suite</div>
         </div>
         """, unsafe_allow_html=True)
 
         with st.container(border=True):
             st.markdown("**Sign in to your account**")
             st.markdown("<div style='height:0.5rem'></div>", unsafe_allow_html=True)
-            username = st.text_input("Username", placeholder="⏎ Enter your username")
-            password = st.text_input("Password", type="password", placeholder="⏎ Enter your password")
+            username = st.text_input("Username", placeholder="Enter your username")
+            password = st.text_input("Password", type="password", placeholder="Enter your password")
             st.markdown("<div style='height:0.25rem'></div>", unsafe_allow_html=True)
-            if st.button("Sign In ⏎", use_container_width=True, type="primary"):
+            if st.button("Sign In", use_container_width=True, type="primary"):
                 if username and password:
                     if login_user(username, password):
                         set_flash("Welcome back! Logged in successfully.", "success")
@@ -718,8 +718,8 @@ def login_page():
                     st.warning("Please enter both username and password.")
 
         st.markdown("""
-        <div style="text-align:center; margin-top:1.25rem; font-size:0.78rem; color:#374151;">
-            🔒 Secure encrypted access &nbsp;·&nbsp; 💊 PharmaCare Pro v2.0
+        <div style="text-align:center; margin-top:1.25rem; font-size:0.78rem; color:#334155;">
+            🔒 Secure encrypted access &nbsp;·&nbsp; 🧬 PharmaNova HMS v3.0
         </div>
         """, unsafe_allow_html=True)
 
@@ -731,8 +731,8 @@ def main_app():
     with st.sidebar:
         st.markdown(f"""
         <div class="sidebar-brand">
-            <span class="sidebar-brand-logo">💊</span>
-            <span class="sidebar-brand-name">PharmaCare Pro</span>
+            <span class="sidebar-brand-logo">🧬</span>
+            <span class="sidebar-brand-name">PharmaNova HMS</span>
             <div style="margin-top:0.6rem;">
                 <span class="sidebar-user-pill">👤 {st.session_state.username} &nbsp;·&nbsp; {st.session_state.role}</span>
             </div>
@@ -2104,7 +2104,7 @@ def show_settings():
         import sqlite3 as _sq
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown(f"**Application:** PharmaCare Pro")
+            st.markdown(f"**Application:** PharmaNova HMS")
             st.markdown(f"**Database:** SQLite3")
             st.markdown(f"**Python SQLite:** {_sq.sqlite_version}")
         with col2:
