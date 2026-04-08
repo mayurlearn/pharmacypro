@@ -704,10 +704,10 @@ def login_page():
         with st.container(border=True):
             st.markdown("**Sign in to your account**")
             st.markdown("<div style='height:0.5rem'></div>", unsafe_allow_html=True)
-            username = st.text_input("Username", placeholder="Enter your username")
-            password = st.text_input("Password", type="password", placeholder="Enter your password")
+            username = st.text_input("Username", placeholder="⏎ Enter your username")
+            password = st.text_input("Password", type="password", placeholder="⏎ Enter your password")
             st.markdown("<div style='height:0.25rem'></div>", unsafe_allow_html=True)
-            if st.button("Sign In →", use_container_width=True, type="primary"):
+            if st.button("Sign In ⏎", use_container_width=True, type="primary"):
                 if username and password:
                     if login_user(username, password):
                         set_flash("Welcome back! Logged in successfully.", "success")
@@ -1045,7 +1045,7 @@ def show_sales():
             
             if not customers.empty:
                 customer = st.selectbox(
-                    "Customer (Optional)",
+                    "👤 Customer (Optional)",
                     options=list(customers['id']) + [None],
                     format_func=lambda x: "-- Walk-in Customer --" if x is None else customers[customers['id']==x]['name'].values[0]
                 )
@@ -1054,7 +1054,9 @@ def show_sales():
                 st.info("ℹ️ No customer records. This sale will be recorded as walk-in.")
         
         with col2:
-            payment_method = st.selectbox("Payment Method", ["Cash", "Card", "Check", "Online"])
+            payment_method = st.selectbox("💳 Payment Method", ["💵 Cash", "🏧 Card", "✓ Check", "🌐 Online"])
+            if payment_method:
+                payment_method = payment_method.split()[-1]  # Extract method name
         
         st.subheader("Select Medicines")
         
@@ -1067,7 +1069,7 @@ def show_sales():
                 
                 with col_a:
                     med = st.selectbox(
-                        "Select Medicine",
+                        "💊 Select Medicine ⬇️",
                         options=medicines['id'],
                         format_func=lambda x: medicines[medicines['id']==x]['name'].values[0],
                         key=f"med_{i}"
