@@ -981,7 +981,7 @@ def get_purchase_order_items(po_id):
     """Get all items belonging to a purchase order."""
     conn = get_db_connection()
     query = """
-    SELECT poi.id, m.name as medicine_name, poi.quantity, poi.unit_price,
+    SELECT poi.id, poi.medicine_id, m.name as medicine_name, poi.quantity, poi.unit_price,
            poi.total_price, poi.received_qty, poi.batch_number, poi.expiry_date
     FROM purchase_order_items poi
     JOIN medicines m ON poi.medicine_id = m.id

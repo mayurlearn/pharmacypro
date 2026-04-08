@@ -999,18 +999,24 @@ def show_purchase_orders():
                 recv_item_label = st.selectbox("Select Item", list(item_opts.keys()), key="recv_item_select")
                 recv_item = item_opts[recv_item_label]
 
-                recv_qty_val = st.number_input(
-                    "Quantity Received", min_value=1,
-                    max_value=int(recv_item['quantity'] - recv_item['received_qty']),
-                    value=int(recv_item['quantity'] - recv_item['received_qty']),
-                    key="recv_qty_input"
-                )
+                remaining = int(recv_item['quantity'] - recv_item['received_qty'])
 
-                if st.button("📥 Receive Stock", type="primary", key="recv_stock_btn"):
+                if remaining <= 0:
+                    st.success("✅ This item has already been fully received.")
+                    recv_qty_val = 0
+                else:
+                    recv_qty_val = st.number_input(
+                        "Quantity Received", min_value=1,
+                        max_value=remaining,
+                        value=remaining,
+                        key="recv_qty_input"
+                    )
+
+                if remaining > 0 and st.button("📥 Receive Stock", type="primary", key="recv_stock_btn"):
                     ok, msg = receive_purchase_order_item(
                         po_item_id=int(recv_item['id']),
                         received_qty=recv_qty_val,
-                        medicine_id=int(recv_item['id'])  # will be matched internally
+                        medicine_id=int(recv_item['medicine_id'])
                     )
                     # Also mark PO as received if all items done
                     all_received = all(
