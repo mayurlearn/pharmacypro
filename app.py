@@ -73,40 +73,46 @@ def inject_css():
     }
 
     /* ══════════════════════════════════════════
-       CSS VARIABLES
+       CSS VARIABLES — high-contrast light theme
     ══════════════════════════════════════════ */
     :root {
         --brand-900: #0d1b2a;
         --brand-800: #1b2e45;
         --brand-700: #1e3a5f;
-        --brand-600: #2553810;
         --brand-500: #3b82f6;
-        --accent:    #06b6d4;
-        --accent2:   #10b981;
-        --accent3:   #8b5cf6;
+        --accent:    #0284c7;
+        --accent2:   #059669;
+        --accent3:   #7c3aed;
         --surface:   #ffffff;
         --surface2:  #f8fafc;
         --surface3:  #f1f5f9;
-        --border:    #e2e8f0;
-        --text-1:    #0f172a;
-        --text-2:    #334155;
-        --text-3:    #64748b;
-        --text-4:    #94a3b8;
-        --danger:    #ef4444;
-        --warning:   #f59e0b;
-        --success:   #10b981;
-        --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
-        --shadow-lg: 0 10px 25px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-        --shadow-xl: 0 20px 40px -6px rgba(0,0,0,0.12), 0 8px 16px -4px rgba(0,0,0,0.06);
+        --border:    #cbd5e1;
+        /* ── TEXT: all dark, high contrast ── */
+        --text-1:    #0a0f1a;   /* near-black headings */
+        --text-2:    #1e293b;   /* dark body text */
+        --text-3:    #374151;   /* secondary text (was #64748b — too light) */
+        --text-4:    #4b5563;   /* muted text (was #94a3b8 — too light) */
+        --danger:    #dc2626;
+        --warning:   #d97706;
+        --success:   #059669;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1),  0 2px 4px -1px rgba(0,0,0,0.06);
+        --shadow-lg: 0 10px 25px -3px rgba(0,0,0,0.12), 0 4px 6px -2px rgba(0,0,0,0.07);
+        --shadow-xl: 0 20px 40px -6px rgba(0,0,0,0.14), 0 8px 16px -4px rgba(0,0,0,0.08);
     }
 
     /* ══════════════════════════════════════════
-       GLOBAL BACKGROUND
+       GLOBAL BACKGROUND — clean white
     ══════════════════════════════════════════ */
     .stApp {
-        background: linear-gradient(160deg, #eef2ff 0%, #f0fdf4 50%, #e0f2fe 100%) !important;
+        background: #f4f6f9 !important;
         min-height: 100vh;
+    }
+
+    /* ── Force ALL main-content text to dark ── */
+    .main p, .main span, .main div, .main li,
+    .main label, .main small, .main td, .main th {
+        color: var(--text-2) !important;
     }
 
     /* ══════════════════════════════════════════
@@ -149,7 +155,7 @@ def inject_css():
     }
     /* Sidebar nav pills */
     section[data-testid="stSidebar"] [data-testid="stRadio"] label {
-        color: #94a3b8 !important;
+        color: #e2e8f0 !important;
         font-size: 0.88rem !important;
         font-weight: 500 !important;
         padding: 0.55rem 0.9rem;
@@ -159,15 +165,15 @@ def inject_css():
         margin: 2px 0;
     }
     section[data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
-        background: rgba(6, 182, 212, 0.12) !important;
-        color: #e2e8f0 !important;
+        background: rgba(2, 132, 199, 0.18) !important;
+        color: #ffffff !important;
     }
     /* Active nav item highlight */
     section[data-testid="stSidebar"] [data-testid="stRadio"] [aria-checked="true"] + div label,
     section[data-testid="stSidebar"] [data-testid="stRadio"] input:checked ~ div label {
-        background: linear-gradient(90deg, rgba(6,182,212,0.25), rgba(6,182,212,0.08)) !important;
+        background: linear-gradient(90deg, rgba(2,132,199,0.35), rgba(2,132,199,0.12)) !important;
         color: #ffffff !important;
-        border-left: 3px solid var(--accent) !important;
+        border-left: 3px solid #38bdf8 !important;
         padding-left: 0.75rem !important;
     }
 
@@ -189,7 +195,7 @@ def inject_css():
     .sidebar-brand-name {
         font-size: 1.1rem !important;
         font-weight: 800 !important;
-        background: linear-gradient(135deg, #06b6d4, #10b981);
+        background: linear-gradient(135deg, #38bdf8, #34d399);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -200,12 +206,12 @@ def inject_css():
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
-        background: rgba(255,255,255,0.07);
-        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
         border-radius: 20px;
         padding: 0.3rem 0.75rem;
         font-size: 0.78rem;
-        color: #94a3b8 !important;
+        color: #e2e8f0 !important;
         margin-top: 0.5rem;
     }
 
@@ -258,12 +264,11 @@ def inject_css():
        METRIC CARDS — glass morphism
     ══════════════════════════════════════════ */
     [data-testid="stMetric"] {
-        background: rgba(255,255,255,0.85) !important;
-        backdrop-filter: blur(10px);
+        background: #ffffff !important;
         border-radius: 16px !important;
         padding: 1.4rem 1.6rem !important;
-        border: 1px solid rgba(255,255,255,0.9) !important;
-        box-shadow: var(--shadow-md), 0 0 0 1px rgba(6,182,212,0.06) !important;
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: var(--shadow-md) !important;
         transition: transform 0.25s ease, box-shadow 0.25s ease;
         position: relative;
         overflow: hidden;
@@ -273,16 +278,16 @@ def inject_css():
         position: absolute;
         top: 0; left: 0; right: 0;
         height: 3px;
-        background: linear-gradient(90deg, var(--accent), var(--accent2));
+        background: linear-gradient(90deg, #0284c7, #059669);
     }
     [data-testid="stMetric"]:hover {
         transform: translateY(-3px) !important;
-        box-shadow: var(--shadow-lg), 0 0 0 1px rgba(6,182,212,0.1) !important;
+        box-shadow: var(--shadow-lg) !important;
     }
     [data-testid="stMetricLabel"] {
-        color: var(--text-3) !important;
+        color: #374151 !important;
         font-size: 0.75rem !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.08em !important;
     }
@@ -310,31 +315,32 @@ def inject_css():
         letter-spacing: 0.01em !important;
     }
     .stButton > button[kind="primary"] {
-        background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%) !important;
+        background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
         color: #ffffff !important;
         border: none !important;
-        box-shadow: 0 4px 14px rgba(6,182,212,0.45) !important;
+        box-shadow: 0 4px 14px rgba(2,132,199,0.4) !important;
     }
     .stButton > button[kind="primary"]:hover {
-        background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%) !important;
-        box-shadow: 0 6px 20px rgba(6,182,212,0.55) !important;
+        background: linear-gradient(135deg, #0369a1 0%, #075985 100%) !important;
+        box-shadow: 0 6px 20px rgba(2,132,199,0.5) !important;
         transform: translateY(-1px) !important;
     }
     .stButton > button[kind="primary"]:active {
         transform: translateY(0) !important;
-        box-shadow: 0 2px 8px rgba(6,182,212,0.4) !important;
+        box-shadow: 0 2px 8px rgba(2,132,199,0.35) !important;
     }
     .stButton > button:not([kind="primary"]) {
         background: var(--surface) !important;
-        color: var(--brand-700) !important;
+        color: #1e3a5f !important;
         border: 1.5px solid var(--border) !important;
         box-shadow: var(--shadow-sm) !important;
+        font-weight: 600 !important;
     }
     .stButton > button:not([kind="primary"]):hover {
-        background: #f0f9ff !important;
-        border-color: var(--accent) !important;
-        color: var(--accent) !important;
-        box-shadow: 0 4px 12px rgba(6,182,212,0.18) !important;
+        background: #eff6ff !important;
+        border-color: #0284c7 !important;
+        color: #0284c7 !important;
+        box-shadow: 0 4px 12px rgba(2,132,199,0.2) !important;
         transform: translateY(-1px) !important;
     }
 
@@ -350,7 +356,7 @@ def inject_css():
         box-shadow: var(--shadow-sm);
     }
     .stTabs [data-baseweb="tab"] {
-        color: var(--text-3) !important;
+        color: #374151 !important;
         font-weight: 600 !important;
         font-size: 0.875rem !important;
         padding: 0.75rem 1.25rem !important;
@@ -360,14 +366,14 @@ def inject_css():
         background: transparent !important;
     }
     .stTabs [data-baseweb="tab"]:hover {
-        color: var(--text-2) !important;
+        color: #1e293b !important;
         background: var(--surface3) !important;
     }
     .stTabs [aria-selected="true"] {
-        color: #0891b2 !important;
+        color: #0369a1 !important;
         font-weight: 700 !important;
-        background: #f0f9ff !important;
-        border-bottom: 3px solid var(--accent) !important;
+        background: #eff6ff !important;
+        border-bottom: 3px solid #0284c7 !important;
     }
     .stTabs [data-baseweb="tab-panel"] {
         background: var(--surface) !important;
@@ -397,8 +403,8 @@ def inject_css():
     .stTextInput > div > div > input:focus,
     .stNumberInput > div > div > input:focus,
     .stTextArea > div > div > textarea:focus {
-        border-color: var(--accent) !important;
-        box-shadow: 0 0 0 3px rgba(6,182,212,0.15) !important;
+        border-color: #0284c7 !important;
+        box-shadow: 0 0 0 3px rgba(2,132,199,0.15) !important;
         outline: none !important;
     }
     .stSelectbox > div > div,
@@ -406,20 +412,21 @@ def inject_css():
         border-radius: 10px !important;
         border: 1.5px solid var(--border) !important;
         background: var(--surface) !important;
+        color: #1e293b !important;
         font-size: 0.9rem !important;
         box-shadow: var(--shadow-sm) !important;
     }
     .stSelectbox > div > div:focus-within,
     .stMultiSelect > div > div:focus-within {
-        border-color: var(--accent) !important;
-        box-shadow: 0 0 0 3px rgba(6,182,212,0.15) !important;
+        border-color: #0284c7 !important;
+        box-shadow: 0 0 0 3px rgba(2,132,199,0.15) !important;
     }
-    /* Label text */
+    /* Label text — clearly visible dark */
     .stTextInput label, .stNumberInput label, .stTextArea label,
     .stSelectbox label, .stMultiSelect label, .stDateInput label {
         font-size: 0.82rem !important;
-        font-weight: 600 !important;
-        color: var(--text-2) !important;
+        font-weight: 700 !important;
+        color: #1e293b !important;
         letter-spacing: 0.02em !important;
         margin-bottom: 0.3rem !important;
     }
@@ -542,7 +549,7 @@ def inject_css():
     }
     .login-subtitle {
         text-align: center;
-        color: var(--text-3);
+        color: #374151;
         font-size: 0.875rem;
         margin-bottom: 1.75rem;
     }
@@ -616,9 +623,9 @@ def inject_css():
        CHECKBOX & RADIO
     ══════════════════════════════════════════ */
     .stCheckbox > label, .stRadio > label {
-        color: var(--text-2) !important;
+        color: #1e293b !important;
         font-size: 0.875rem !important;
-        font-weight: 500 !important;
+        font-weight: 600 !important;
     }
 
     /* ══════════════════════════════════════════
@@ -710,7 +717,7 @@ def login_page():
                     st.warning("Please enter both username and password.")
 
         st.markdown("""
-        <div style="text-align:center; margin-top:1.25rem; font-size:0.78rem; color:#94a3b8;">
+        <div style="text-align:center; margin-top:1.25rem; font-size:0.78rem; color:#374151;">
             🔒 Secure encrypted access &nbsp;·&nbsp; 💊 PharmaCare Pro v2.0
         </div>
         """, unsafe_allow_html=True)
