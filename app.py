@@ -342,19 +342,15 @@ def login_page():
         password = st.text_input("Password", type="password", placeholder="Enter password")
         
         col_a, col_b = st.columns(2)
-        with col_a:
-            if st.button("Login", use_container_width=True, type="primary"):
-                if username and password:
-                    if login_user(username, password):
-                        set_flash("Login successful!", "success")
-                        st.rerun()
-                    else:
-                        st.error("Invalid username or password")
+        if st.button("Login", use_container_width=True, type="primary"):
+            if username and password:
+                if login_user(username, password):
+                    set_flash("Login successful!", "success")
+                    st.rerun()
                 else:
-                    st.warning("Please enter username and password")
-        
-        with col_b:
-            st.info("Demo: admin/admin123")
+                    st.error("Invalid username or password")
+            else:
+                st.warning("Please enter username and password")
 
 # ============= MAIN APPLICATION =============
 def main_app():
