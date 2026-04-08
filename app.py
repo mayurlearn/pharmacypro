@@ -653,97 +653,100 @@ def show_sales():
     with tab1:
         st.subheader("Create New Sale/Bill")
         
+        from database.db import get_all_customers, get_all_medicines
+        
+        medicines = get_all_medicines()
+        
+        if medicines.empty:
+            st.error("❌ No medicines in inventory. Please add medicines in the Inventory section first.")
+            return
+        
         col1, col2 = st.columns(2)
         
         with col1:
-            from database.db import get_all_customers, get_all_medicines
             customers = get_all_customers()
             
             if not customers.empty:
                 customer = st.selectbox(
                     "Customer (Optional)",
-                    options=customers['id'],
-                    format_func=lambda x: customers[customers['id']==x]['name'].values[0]
+                    options=list(customers['id']) + [None],
+                    format_func=lambda x: "-- Walk-in Customer --" if x is None else customers[customers['id']==x]['name'].values[0]
                 )
             else:
                 customer = None
-                st.warning("No customers found. Create one in Customers section.")
+                st.info("ℹ️ No customer records. This sale will be recorded as walk-in.")
         
         with col2:
             payment_method = st.selectbox("Payment Method", ["Cash", "Card", "Check", "Online"])
         
-        # Medicine selection
-        medicines = get_all_medicines()
+        st.subheader("Select Medicines")
         
-        if not medicines.empty:
-            st.subheader("Select Medicines")
-            
-            sale_items = []
-            medicine_count = st.number_input("Number of medicine items", min_value=1, max_value=10, value=1)
-            
-            for i in range(int(medicine_count)):
-                with st.expander(f"Medicine {i+1}", expanded=(i==0)):
-                    col_a, col_b, col_c = st.columns(3)
-                    
-                    with col_a:
-                        med = st.selectbox(
-                            "Select Medicine",
-                            options=medicines['id'],
-                            format_func=lambda x: medicines[medicines['id']==x]['name'].values[0],
-                            key=f"med_{i}"
-                        )
-                    
-                    with col_b:
-                        qty = st.number_input("Quantity", min_value=1, value=1, key=f"qty_{i}")
-                    
-                    with col_c:
-                        price = st.number_input("Unit Price ($)", min_value=0.0, step=0.01, key=f"price_{i}")
-                    
-                    if med and qty > 0:
-                        sale_items.append({
-                            'medicine_id': med,
-                            'quantity': qty,
-                            'unit_price': price
-                        })
-            
-            st.divider()
-            
-            col_x, col_y = st.columns(2)
-            
-            with col_x:
-                discount = st.number_input("Discount ($)", min_value=0.0, step=0.01)
-                tax_rate = st.number_input("Tax Rate (%)", min_value=0.0, max_value=100.0, value=5.0)
-            
-            with col_y:
-                notes = st.text_area("Notes/Remarks")
-            
-            # Calculate totals
-            subtotal = sum(item['quantity'] * item['unit_price'] for item in sale_items)
-            tax = (subtotal * tax_rate) / 100
-            total = subtotal - discount + tax
-            
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                st.metric("Subtotal", f"Rs {subtotal:,.2f}")
-            with col2:
-                st.metric("Total Tax", f"Rs {tax:,.2f}")
-            with col3:
-                st.metric("Total Amount", f"Rs {total:,.2f}")
-            
-            if st.button("Complete Sale", type="primary", use_container_width=True):
-                if sale_items:
-                    from database.db import create_sale
-                    success, bill_number, amount = create_sale(
-                        customer, sale_items, discount, tax, payment_method,
-                        st.session_state.user_id, notes
+        sale_items = []
+        medicine_count = st.number_input("Number of medicine items", min_value=1, max_value=10, value=1)
+        
+        for i in range(int(medicine_count)):
+            with st.expander(f"Medicine {i+1}", expanded=(i==0)):
+                col_a, col_b, col_c = st.columns(3)
+                
+                with col_a:
+                    med = st.selectbox(
+                        "Select Medicine",
+                        options=medicines['id'],
+                        format_func=lambda x: medicines[medicines['id']==x]['name'].values[0],
+                        key=f"med_{i}"
                     )
-                    if success:
-                        set_flash(f"✅ Sale completed! Bill: {bill_number} | Amount: Rs {amount:,.2f}", "success")
-                        st.rerun()
-                    else:
-                        st.error(f"Error: {bill_number}")
+                
+                with col_b:
+                    qty = st.number_input("Quantity", min_value=1, value=1, key=f"qty_{i}")
+                
+                with col_c:
+                    price = st.number_input("Unit Price (Rs)", min_value=0.0, step=0.01, key=f"price_{i}")
+                
+                if med and qty > 0:
+                    sale_items.append({
+                        'medicine_id': med,
+                        'quantity': qty,
+                        'unit_price': price
+                    })
+        
+        st.divider()
+        
+        col_x, col_y = st.columns(2)
+        
+        with col_x:
+            discount = st.number_input("Discount (Rs)", min_value=0.0, step=0.01)
+            tax_rate = st.number_input("Tax Rate (%)", min_value=0.0, max_value=100.0, value=5.0)
+        
+        with col_y:
+            notes = st.text_area("Notes/Remarks")
+        
+        # Calculate totals
+        subtotal = sum(item['quantity'] * item['unit_price'] for item in sale_items)
+        tax = (subtotal * tax_rate) / 100
+        total = subtotal - discount + tax
+        
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("Subtotal", f"Rs {subtotal:,.2f}")
+        with col2:
+            st.metric("Total Tax", f"Rs {tax:,.2f}")
+        with col3:
+            st.metric("Total Amount", f"Rs {total:,.2f}")
+        
+        if st.button("Complete Sale", type="primary", use_container_width=True):
+            if sale_items:
+                from database.db import create_sale
+                success, bill_number, amount = create_sale(
+                    customer, sale_items, discount, tax, payment_method,
+                    st.session_state.user_id, notes
+                )
+                if success:
+                    set_flash(f"✅ Sale completed! Bill: {bill_number} | Amount: Rs {amount:,.2f}", "success")
+                    st.rerun()
                 else:
-                    st.error("Please select at least one medicine")
+                    st.error(f"Error: {bill_number}")
+            else:
+                st.error("Please select at least one medicine")
     
     with tab2:
         st.subheader("Sales History")
