@@ -746,7 +746,7 @@ def create_purchase_order(supplier_id, order_items, expected_delivery_date, crea
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    po_number = f"PO-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+    po_number = f"PO-{datetime.now().strftime('%Y%m%d%H%M%S')}-{str(datetime.now().microsecond)[:4]}"
     total_amount = sum(item['quantity'] * item['unit_price'] for item in order_items)
     
     try:
@@ -783,7 +783,7 @@ def receive_purchase_order_item(po_item_id, received_qty, medicine_id):
     try:
         # Update received quantity
         cursor.execute(
-            "UPDATE purchase_order_items SET received_qty = ? WHERE id = ?",
+            "UPDATE purchase_order_items SET received_qty = received_qty + ? WHERE id = ?",
             (received_qty, po_item_id)
         )
         
