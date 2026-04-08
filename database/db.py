@@ -3,9 +3,21 @@ from datetime import datetime
 import pandas as pd
 from pathlib import Path
 import hashlib
+import tempfile
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-DATA_DIR = BASE_DIR / "data"
+_local_data = BASE_DIR / "data"
+try:
+    _local_data.mkdir(parents=True, exist_ok=True)
+    _probe = _local_data / ".write_test"
+    _probe.write_text("x")
+    _probe.unlink()
+    DATA_DIR = _local_data
+except (OSError, PermissionError):
+    # Streamlit Cloud / read-only deployment — use writable /tmp
+    DATA_DIR = Path(tempfile.gettempdir())
+
 DB_PATH = DATA_DIR / "pharmacy.db"
 
 def get_db_connection():
