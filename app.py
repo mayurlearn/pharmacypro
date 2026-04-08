@@ -1061,7 +1061,7 @@ def show_sales():
         st.subheader("Select Medicines")
         
         sale_items = []
-        medicine_count = st.number_input("Number of medicine items", min_value=1, max_value=10, value=1)
+        medicine_count = st.number_input("⬇️ Number of medicine items", min_value=1, max_value=10, value=1)
         
         for i in range(int(medicine_count)):
             with st.expander(f"Medicine {i+1}", expanded=(i==0)):
